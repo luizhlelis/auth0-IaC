@@ -1,6 +1,6 @@
 # auth0-IaC
 
-Just playing a bit with Auth0 🔐, Terraform 🏗️ , and `auth0-cli` 🧑‍💻
+Just playing a bit with Auth0 🔐, Terraform 🏗️ , `auth0-cli` 🧑‍💻 and Pulumi 🟪
 
 ## Prerequisites
 
