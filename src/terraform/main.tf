@@ -16,12 +16,10 @@ resource "auth0_branding" "auth_tenant_branding" {
     primary         = "#0059d6"
     page_background = "#000000"
   }
-  universal_login {
-    body = "<!DOCTYPE html><html><head>{%- auth0:head -%}</head><body>{%- auth0:widget -%}</body></html>"
-  }
 }
 
 resource "auth0_client" "auth0_sample_app_client" {
+  logo_uri                            = "https://raw.githubusercontent.com/luizhlelis/luizlelis.com/main/src/assets/logo-black.png"
   name                                = var.CLIENT_NAME
   description                         = var.CLIENT_DESCRIPTION
   app_type                            = "regular_web"
@@ -30,11 +28,11 @@ resource "auth0_client" "auth0_sample_app_client" {
   is_token_endpoint_ip_header_trusted = true
   token_endpoint_auth_method          = "client_secret_post"
   oidc_conformant                     = true
-  callbacks                           = ["https://localhost:5001/v1/auth/response-oidc"]
-  allowed_origins                     = ["https://localhost"]
+  callbacks                           = ["http://localhost:80/v1/auth/response-oidc"]
+  allowed_origins                     = ["http://localhost"]
   grant_types                         = ["authorization_code"]
-  allowed_logout_urls                 = ["https://localhost:5001/"]
-  web_origins                         = ["https://localhost"]
+  allowed_logout_urls                 = ["http://localhost:80/"]
+  web_origins                         = ["http://localhost"]
   jwt_configuration {
     lifetime_in_seconds = 300
     secret_encoded      = true
@@ -42,15 +40,6 @@ resource "auth0_client" "auth0_sample_app_client" {
     scopes = {
       foo = "bar"
     }
-  }
-  refresh_token {
-    rotation_type                = "rotating"
-    expiration_type              = "expiring"
-    leeway                       = 15
-    token_lifetime               = 1296000
-    infinite_idle_token_lifetime = true
-    infinite_token_lifetime      = false
-    idle_token_lifetime          = 84600
   }
   client_metadata = {
     foo = "zoo"
