@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+  sample-app:
+    container_name: sample-app
+    working_dir: /app
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "dotnet SampleApp.Web.dll"
+    ports:
+      - "80:80"
