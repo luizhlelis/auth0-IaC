@@ -6,22 +6,28 @@ Just playing a bit with Auth0 🔐, Terraform 🏗️ , `auth0-deploy-cli` 🧑�
 
 - [Auth0 Account](https://auth0.com/)
 
-- [A Machine to Machine application](https://auth0.com/docs/get-started/auth0-overview/create-applications/machine-to-machine-apps) on `auth0` with all permissions.
+- [A Machine to Machine application](https://auth0.com/docs/get-started/auth0-overview/create-applications/machine-to-machine-apps) on your `auth0` tenant with all permissions.
 
-## Terraform
+## Running commands
 
-Before `init`,`plan` and `apply` the terraform files, first you need to store the credentials in environment variables:
+First, you need to update the [.env](src/.env) file with your application credentials as described in `Prerequisites`:
+
+The command below will publish all infrastructure in your tenant with terraform:
 
 ```bash
-export AUTH0_DOMAIN="<domain>"
-export AUTH0_CLIENT_ID="<client-id>"
-export AUTH0_CLIENT_SECRET="<client-secret>"
+docker-compose up --build terraform
 ```
 
-> **NOTE:** The `client-id` and `client-secret` above are different from the app credentials, those credentials are gonna be created in the next section.
-
-To override [variables.tf](./src/terraform/variables.tf) (in your pipeline for example), just add `TF_VAR_` prefix to the variables you want to override:
+The command below will publish all infrastructure in your tenant with `auth0-deploy-cli`:
 
 ```bash
-TF_VAR_CLIENT_DESCRIPTION overrides CLIENT_DESCRIPTION
+docker-compose up --build auth0-cli
+```
+
+After that, get the `Sample App` credentials in [terraform.tfstate](src/terraform/terraform.tfstate) file and update `# Sample app` section of [.env](src/.env) file.
+
+Now, you're able to run the `Regular Web` application:
+
+```bash
+docker-compose up --build sample-app
 ```
