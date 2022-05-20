@@ -10,8 +10,8 @@ terraform {
 provider "auth0" {}
 
 resource "auth0_branding" "auth_tenant_branding" {
-  logo_url    = "https://raw.githubusercontent.com/luizhlelis/luizlelis.com/main/src/assets/logo-black.png"
-  favicon_url = "https://raw.githubusercontent.com/luizhlelis/luizlelis.com/main/src/assets/logo-black.png"
+  logo_url    = "https://upload.wikimedia.org/wikipedia/commons/0/04/Terraform_Logo.svg"
+  favicon_url = "https://upload.wikimedia.org/wikipedia/commons/0/04/Terraform_Logo.svg"
   colors {
     primary         = "#0059d6"
     page_background = "#000000"
@@ -19,7 +19,7 @@ resource "auth0_branding" "auth_tenant_branding" {
 }
 
 resource "auth0_client" "auth0_sample_app_client" {
-  logo_uri                            = "https://raw.githubusercontent.com/luizhlelis/luizlelis.com/main/src/assets/logo-black.png"
+  logo_uri                            = "https://upload.wikimedia.org/wikipedia/commons/0/04/Terraform_Logo.svg"
   name                                = var.CLIENT_NAME
   description                         = var.CLIENT_DESCRIPTION
   app_type                            = "regular_web"
