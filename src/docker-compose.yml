@@ -11,3 +11,16 @@ services:
     command: "dotnet SampleApp.Web.dll"
     ports:
       - "80:80"
+
+  terraform:
+    container_name: terraform
+    working_dir: /infra-as-code
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.terraform
+    volumes:
+      - "./terraform:/infra-as-code"
+      - "./scripts/plan-and-apply.sh:/scripts/plan-and-apply.sh"
+    command: bash "../scripts/plan-and-apply.sh"
