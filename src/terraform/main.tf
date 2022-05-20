@@ -28,11 +28,11 @@ resource "auth0_client" "auth0_sample_app_client" {
   is_token_endpoint_ip_header_trusted = true
   token_endpoint_auth_method          = "client_secret_post"
   oidc_conformant                     = true
-  callbacks                           = ["http://localhost:80/v1/auth/response-oidc"]
-  allowed_origins                     = ["http://localhost"]
-  grant_types                         = ["authorization_code"]
-  allowed_logout_urls                 = ["http://localhost:80/"]
-  web_origins                         = ["http://localhost"]
+  callbacks                           = [var.CALLBACK]
+  allowed_origins                     = [var.ALLOWED_ORIGINS]
+  grant_types                         = [var.GRANT_TYPES]
+  allowed_logout_urls                 = [var.ALLOWED_LOGOUT_URLS]
+  web_origins                         = [var.WEB_ORIGINS]
   jwt_configuration {
     lifetime_in_seconds = 300
     secret_encoded      = true
