@@ -1,0 +1,59 @@
+{
+  "is_token_endpoint_ip_header_trusted": true,
+  "name": "##TF_VAR_CLIENT_NAME##",
+  "description": "##TF_VAR_CLIENT_DESCRIPTION##",
+  "is_first_party": true,
+  "oidc_conformant": true,
+  "callbacks": [
+    "##TF_VAR_CALLBACK##"
+  ],
+  "allowed_logout_urls": [
+    "##TF_VAR_ALLOWED_LOGOUT_URLS##"
+  ],
+  "client_metadata": {
+    "foo": "zoo"
+  },
+  "sso_disabled": false,
+  "cross_origin_auth": false,
+  "refresh_token": {
+    "expiration_type": "non-expiring",
+    "leeway": 0,
+    "infinite_token_lifetime": true,
+    "infinite_idle_token_lifetime": true,
+    "token_lifetime": 31557600,
+    "idle_token_lifetime": 2592000,
+    "rotation_type": "non-rotating"
+  },
+  "allowed_clients": [],
+  "logo_uri": "",
+  "native_social_login": {
+    "apple": {
+      "enabled": false
+    },
+    "facebook": {
+      "enabled": false
+    }
+  },
+  "sso": false,
+  "allowed_origins": [
+    "##TF_VAR_ALLOWED_ORIGINS##"
+  ],
+  "jwt_configuration": {
+    "scopes": {
+      "foo": "bar"
+    },
+    "alg": "RS256",
+    "lifetime_in_seconds": 300,
+    "secret_encoded": true
+  },
+  "client_aliases": [],
+  "token_endpoint_auth_method": "client_secret_post",
+  "app_type": "regular_web",
+  "grant_types": [
+    "##TF_VAR_GRANT_TYPES##"
+  ],
+  "web_origins": [
+    "##TF_VAR_WEB_ORIGINS##"
+  ],
+  "custom_login_page_on": true
+}
