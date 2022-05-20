@@ -18,6 +18,10 @@
             {
                 <tr>
                     <td>@claim.Type</td>
+                    @if (claim.Type == "picture")
+                    {
+                        <img src="@claim.Value" alt="User picture">
+                    }
                     <td>@claim.Value</td>
                 </tr>
             }
