@@ -1,8 +1,10 @@
-﻿using Pulumi;
+﻿using System.Threading.Tasks;
+using Pulumi;
 
-namespace PulumiSample;
-
-class Program
+namespace PulumiSample
 {
-    static Task<int> Main() => Deployment.RunAsync<MyStack>();
+    class Program
+    {
+        static Task<int> Main() => Deployment.RunAsync<MyStack>();
+    }
 }
