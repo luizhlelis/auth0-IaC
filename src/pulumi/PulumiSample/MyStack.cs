@@ -22,12 +22,12 @@ namespace PulumiSample
                     PageBackground = "#feda4a",
                     Primary = "#805ac3",
                 },
-                LogoUrl = "https://www.pulumi.com/images/logo/logo-on-black.svg"
+                LogoUrl = "https://www.pulumi.com/images/logo/logo-on-white-box.svg"
             });
 
             var myClient = new Client("auth0_sample_app_client", new ClientArgs
             {
-                LogoUri = "https://www.pulumi.com/images/logo/logo-on-black.svg",
+                LogoUri = "https://www.pulumi.com/images/logo/logo-on-white-box.svg",
                 Name = Environment.GetEnvironmentVariable("TF_VAR_CLIENT_NAME"),
                 Description = Environment.GetEnvironmentVariable("TF_VAR_CLIENT_DESCRIPTION"),
                 CustomLoginPageOn = true,
