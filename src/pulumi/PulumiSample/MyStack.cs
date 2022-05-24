@@ -7,6 +7,12 @@ namespace PulumiSample
 {
     public class MyStack : Stack
     {
+        [Output]
+        public Output<string> ClientId { get; private set; }
+
+        [Output]
+        public Output<string> ClientSecret { get; private set; }
+
         public MyStack()
         {
             var myBrand = new Branding("auth_tenant_branding", new BrandingArgs
@@ -22,8 +28,8 @@ namespace PulumiSample
             var myClient = new Client("auth0_sample_app_client", new ClientArgs
             {
                 LogoUri = "https://www.pulumi.com/images/logo/logo-on-black.svg",
-                Name = Environment.GetEnvironmentVariable("CLIENT_NAME"),
-                Description = Environment.GetEnvironmentVariable("CLIENT_DESCRIPTION"),
+                Name = Environment.GetEnvironmentVariable("TF_VAR_CLIENT_NAME"),
+                Description = Environment.GetEnvironmentVariable("TF_VAR_CLIENT_DESCRIPTION"),
                 CustomLoginPageOn = true,
                 IsFirstParty = true,
                 IsTokenEndpointIpHeaderTrusted = true,
@@ -31,24 +37,24 @@ namespace PulumiSample
                 TokenEndpointAuthMethod = "client_secret_post",
                 AllowedLogoutUrls =
                 {
-                    Environment.GetEnvironmentVariable("ALLOWED_LOGOUT_URLS")
+                    Environment.GetEnvironmentVariable("TF_VAR_ALLOWED_LOGOUT_URLS")
                 },
                 AllowedOrigins =
                 {
-                    Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
+                    Environment.GetEnvironmentVariable("TF_VAR_ALLOWED_ORIGINS")
                 },
                 AppType = "regular_web",
                 Callbacks =
                 {
-                    Environment.GetEnvironmentVariable("CALLBACK")
+                    Environment.GetEnvironmentVariable("TF_VAR_CALLBACK")
                 },
                 GrantTypes =
                 {
-                    Environment.GetEnvironmentVariable("GRANT_TYPES")
+                    Environment.GetEnvironmentVariable("TF_VAR_GRANT_TYPES")
                 },
                 WebOrigins =
                 {
-                    Environment.GetEnvironmentVariable("WEB_ORIGINS")
+                    Environment.GetEnvironmentVariable("TF_VAR_WEB_ORIGINS")
                 },
                 JwtConfiguration = new ClientJwtConfigurationArgs
                 {
@@ -65,6 +71,9 @@ namespace PulumiSample
                     { "foo", "zoo" },
                 }
             });
+
+            ClientId = myClient.ClientId;
+            ClientSecret = myClient.ClientSecret;
         }
     }
 }
