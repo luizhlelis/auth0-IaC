@@ -1,0 +1,3 @@
+name: PulumiSample
+runtime: dotnet
+description: A minimal Auth0 C# Pulumi program
