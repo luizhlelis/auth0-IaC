@@ -45,4 +45,4 @@ services:
     image: pulumi/pulumi-dotnet
     volumes:
       - "./pulumi/PulumiSample:/infra-as-code"
-    command: "pulumi preview --stack PulumiSample --non-interactive"
+    command: "pulumi up --yes --stack PulumiSample --non-interactive"
