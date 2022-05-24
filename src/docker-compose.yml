@@ -36,3 +36,13 @@ services:
     volumes:
       - "./auth0-cli:/infra-as-code"
     command: "a0deploy import --config_file config.json --input_file ."
+
+  pulumi:
+    container_name: pulumi
+    working_dir: /infra-as-code
+    env_file:
+      - .env
+    image: pulumi/pulumi-dotnet
+    volumes:
+      - "./pulumi/PulumiSample:/infra-as-code"
+    command: "pulumi preview --stack PulumiSample --non-interactive"
