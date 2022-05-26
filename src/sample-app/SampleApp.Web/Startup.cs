@@ -46,18 +46,11 @@ public class Startup
         foreach (var scope in scopeArray)
             options.Scope.Add(scope);
 
-        services.AddDistributedMemoryCache();
-        services.AddSession(options =>
         // This saves the tokens in the session cookie
         options.SaveTokens = true;
 
         options.Events = new OpenIdConnectEvents
         {
-            options.Cookie.Name = ".SampleApp.Web.Session";
-            options.IdleTimeout = TimeSpan.FromSeconds(120);
-            options.Cookie.HttpOnly = false;
-            options.Cookie.IsEssential = true;
-        });
             // handle the logout redirection
             OnRedirectToIdentityProviderForSignOut = (context) =>
             {
@@ -103,7 +96,6 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseSession();
 
         app.UseEndpoints(endpoints =>
         {
