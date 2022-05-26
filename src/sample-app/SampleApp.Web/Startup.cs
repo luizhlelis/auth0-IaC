@@ -42,8 +42,7 @@ public class Startup
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
 
         // Set response type to code
-        options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
-        options.ResponseMode = OpenIdConnectResponseMode.FormPost;
+        options.ResponseType = OpenIdConnectResponseType.Code;
 
         options.Scope.Clear();
         var scopeArray = Configuration["Auth0:Scope"].Split(',');
