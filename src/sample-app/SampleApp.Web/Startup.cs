@@ -37,6 +37,10 @@ public class Startup
         options.CallbackPath = new PathString(Configuration["Auth0:RedirectUri"]);
         options.ClaimsIssuer = "Auth0";
 
+        // Auth0 Cookies
+        options.NonceCookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+
         // Set response type to code
         options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
         options.ResponseMode = OpenIdConnectResponseMode.FormPost;
