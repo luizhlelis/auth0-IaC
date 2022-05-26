@@ -1,78 +1,40 @@
 using System.Security.Claims;
-using System.Web;
-using IdentityModel.OidcClient;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SampleApp.Web.Models;
-using SampleApp.Web.Support;
 
 namespace SampleApp.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly OidcClientOptions _oidcClientOptions;
-    private readonly string _sessionKey;
+    private readonly string? _redirectUri;
 
-    public AccountController(OidcClientOptions oidcClientOptions)
+    public AccountController()
     {
-        _oidcClientOptions = oidcClientOptions;
-        _sessionKey = "auth-code";
+        _redirectUri = "/";
     }
 
-    public async Task<RedirectResult> Login()
+    public async Task Login()
     {
-        var client = new OidcClient(_oidcClientOptions);
-        var state = await client.PrepareLoginAsync();
-        // Keeping track of the state so we can retrieve it later
-        HttpContext.Session.Set<AuthorizeState>(_sessionKey, state);
-
-        return Redirect(state.StartUrl);
-    }
-
-    public async Task<RedirectToActionResult> Callback()
-    {
-        var client = new OidcClient(_oidcClientOptions);
-        var createdStateWhenTheFlowWasInitiated =
-            HttpContext.Session.Get<AuthorizeState>(_sessionKey);
-        var urlToBeParsed = Request.GetDisplayUrl();
-        var result =
-            await client.ProcessResponseAsync(urlToBeParsed, createdStateWhenTheFlowWasInitiated);
-        // Sign in a principal for the default authentication scheme.
-        await HttpContext.SignInAsync(result.User);
-
-        return RedirectToAction(controllerName: "Home", actionName: "Index");
+        await HttpContext.ChallengeAsync("Auth0",
+            new AuthenticationProperties {RedirectUri = _redirectUri});
     }
 
     [Authorize]
-    public async Task<RedirectResult> Logout()
+    public async Task Logout()
     {
-        var logoutUrl = $"{_oidcClientOptions.Authority}/v2/logout";
-        var uriBuilder = new UriBuilder(logoutUrl);
-        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-        query["returnTo"] = Url.ActionLink("Index", "Home");
-        query["client_id"] = _oidcClientOptions.ClientId;
-        uriBuilder.Query = query.ToString();
-        var logoutUri = uriBuilder.Uri.AbsoluteUri;
+        var authenticationProperties =
+            new AuthenticationProperties {RedirectUri = Url.ActionLink("Index", "Home")};
 
-        // Clear current session
-        HttpContext.Session.Clear();
-        // Delete temporary cookie used during external authentication
+        await HttpContext.SignOutAsync("Auth0", authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        // Clear session on Auth0
-        return Redirect(logoutUri);
     }
 
     [Authorize]
     public async Task<IActionResult> Profile()
     {
-        // https://docs.identityserver.io/en/latest/quickstarts/3_aspnetcore_and_apis.html#using-the-access-token
-        var accessToken = await HttpContext.GetTokenAsync("access_token");
-        var idToken = await HttpContext.GetTokenAsync("id_token");
-        var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
-
         return View(new UserProfileViewModel()
         {
             Id = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value,
