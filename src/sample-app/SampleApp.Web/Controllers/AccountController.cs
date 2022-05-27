@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ namespace SampleApp.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly string? _redirectUri;
+    private readonly string _redirectUri;
 
     public AccountController()
     {
@@ -18,30 +19,36 @@ public class AccountController : Controller
 
     public async Task Login()
     {
-        await HttpContext.ChallengeAsync("Auth0",
-            new AuthenticationProperties {RedirectUri = _redirectUri});
+        var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+            .WithRedirectUri(_redirectUri)
+            .Build();
+
+        await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme,
+            authenticationProperties);
     }
 
     [Authorize]
     public async Task Logout()
     {
-        var authenticationProperties =
-            new AuthenticationProperties {RedirectUri = Url.ActionLink("Index", "Home")};
+        var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+            .WithRedirectUri(Url.ActionLink("Index", "Home") ?? string.Empty)
+            .Build();
 
-        await HttpContext.SignOutAsync("Auth0", authenticationProperties);
+        await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme,
+            authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
     [Authorize]
-    public async Task<IActionResult> Profile()
+    public Task<IActionResult> Profile()
     {
-        return View(new UserProfileViewModel()
+        return Task.FromResult<IActionResult>(View(new UserProfileViewModel()
         {
             Id = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value,
             Name = User.Identity.Name,
             EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
             ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
-        });
+        }));
     }
 
     [Authorize]
