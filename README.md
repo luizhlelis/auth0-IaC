@@ -30,6 +30,20 @@ docker-compose up --build auth0-cli
 
 After that, get the `Sample App` credentials in Auth0 portal (go to `Applications` > `Applications` > `Sample app client` > `Settings` > `Basic Information`) . Then, update `# Sample app` section of [.env](src/.env) file.
 
+As `sample-app` uses `https` endpoints, you need to create a localhost certificate, got to the [scripts](src/scripts) folder and type the following command:
+
+```bash
+./gen-cert.sh
+```
+
+After that, you need to trust the certificate `servercert.crt` that was created in [certificates](src/certificates) folder. To do that, you can follow one of the following ways (depending on your OS):
+
+[Mac Os](https://tosbourn.com/getting-os-x-to-trust-self-signed-ssl-certificates/)
+
+[Windows](https://superuser.com/questions/370217/trust-ssl-certificate-to-local-system-account)
+
+[Linux](https://unix.stackexchange.com/questions/90450/adding-a-self-signed-certificate-to-the-trusted-list)
+
 After your infra is up, you're able to run the `Regular Web` application:
 
 ```bash
