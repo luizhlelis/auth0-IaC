@@ -438,3 +438,8 @@ FodyWeavers.xsd
 
 # macOs files
 .DS_Store
+
+# self-signed certificates
+certificates/
+*.csr
+*.pem

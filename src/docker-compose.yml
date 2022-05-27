@@ -3,6 +3,8 @@ services:
   sample-app:
     container_name: sample-app
     working_dir: /app
+    volumes:
+      - "./certificates:/app/certificates"
     env_file:
       - .env
     build:
@@ -11,6 +13,7 @@ services:
     command: "dotnet SampleApp.Web.dll"
     ports:
       - "80:80"
+      - "443:443"
 
   terraform:
     container_name: terraform
