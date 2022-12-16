@@ -1,5 +1,7 @@
 FROM debian
-RUN apt-get update && apt-get install -y gnupg software-properties-common curl
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-RUN apt-get update && apt-get install terraform
+
+RUN apt update
+RUN apt install wget unzip -y
+RUN wget https://releases.hashicorp.com/terraform/1.1.9/terraform_1.1.9_linux_amd64.zip
+RUN unzip terraform_1.1.9_linux_amd64.zip
+RUN mv terraform /usr/local/bin/
