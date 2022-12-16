@@ -14,7 +14,7 @@ First, you need to update the [.env](src/.env) file with your application creden
 
 Go to the [src](src/) folder and then type one of the following commands (depending on the infrastructure you want to deploy):
 
-1) The command below will publish all infrastructure in your tenant with terraform:
+1) The command below will publish all infrastructure in your tenant with `terraform`:
 
 ```bash
 docker-compose up --build terraform
@@ -26,6 +26,12 @@ After that, get the `Sample App` credentials in [terraform.tfstate](src/terrafor
 
 ```bash
 docker-compose up --build auth0-cli
+```
+
+3) The command below will publish all infrastructure in your tenant with `pulumi`:
+
+```bash
+docker-compose up --build pulumi
 ```
 
 After that, get the `Sample App` credentials in Auth0 portal (go to `Applications` > `Applications` > `Sample app client` > `Settings` > `Basic Information`) . Then, update `# Sample app` section of [.env](src/.env) file.
