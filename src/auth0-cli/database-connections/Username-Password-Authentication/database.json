@@ -15,8 +15,6 @@
     "Username-Password-Authentication"
   ],
   "enabled_clients": [
-    "Default App",
-    "Sample app client",
-    "terraform"
+    "Sample app client"
   ]
 }

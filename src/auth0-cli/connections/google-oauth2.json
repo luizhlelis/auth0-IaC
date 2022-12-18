@@ -11,8 +11,6 @@
   "name": "google-oauth2",
   "is_domain_connection": false,
   "enabled_clients": [
-    "Default App",
-    "Sample app client",
-    "terraform"
+    "Sample app client"
   ]
 }
